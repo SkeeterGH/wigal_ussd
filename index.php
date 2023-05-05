@@ -17,7 +17,7 @@ if ($MODE == "start") {
       $res .= "1. Cast Vote^";
       $res .= "2. View Votes^";
       $res .= "3. Contact Us";
-      $OTHER = "1";
+      $OTHER = "1*1";
       $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER";
 } else {
       $userInputs = explode("*", $OTHER);
@@ -25,11 +25,11 @@ if ($MODE == "start") {
       if ($userInputs[0] == '1') {
             //shows initial user main menu
             if ($OTHER == '1') {
-                  $OTHER = "2";
+                  $OTHER = "1*2";
                   $res = "Enter Nominee's ShortCode $NETWORKID";
                   $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
             } else if ($OTHER == '2') {
-                  $OTHER = "3";
+                  $OTHER = "1*3";
                   $amount = "0.50";
                   $res = "(GHS $amount / vote)^Enter Number of votes";
                   $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
@@ -38,7 +38,7 @@ if ($MODE == "start") {
                   $shortCode = $userInputs[1];
                   $numberOfVotes = $userInputs[2];
                   $totalAmount  = ($amount * $numberOfVotes);
-                  $OTHER = "4";
+                  $OTHER = "1*4";
                   $res = "CheckOut :^";
                   $res .= "Smart Media Awards^";
                   $res .= "Best Singer Of The Year ^";
@@ -68,7 +68,7 @@ if ($MODE == "start") {
       } else if ($userInputs[0]  == '2') {
             //shows initial user main menu
             if ($OTHER == '1') {
-                  $OTHER = "2";
+                  $OTHER = "2*2";
                   $res = "Enter Nominee's ShortCode";
                   $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
             } else if ($OTHER == '2') {
