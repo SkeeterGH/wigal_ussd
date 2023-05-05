@@ -1,40 +1,111 @@
 <?php
-require_once("menu.php");
+// start the session
+session_start();
 
-$msisdn       = $_GET['msisdn'];
-$session_id   = $_GET['sessionid'];
-$network_code = $_GET['network'];
-$mode         = $_GET['mode'];
-$input    = $_GET['userdata'];
-$user_name    = $_GET['username'];
-$traffic_id   = $_GET['trafficid'];
-$level        = $_GET['level'];
-$response     = "";
+$MSISDN = $_GET['msisdn'];
+$SESSION_ID = $_GET['sessionid'];
+$NETWORKID = $_GET['network'];
+$MODE = $_GET['mode'];
+$DATA = $_GET['userdata'];
+$USERNAME = $_GET['username'];
+$TRAFFIC_ID = $_GET['trafficid'];
+$OTHER = $_GET['other'];
+$RESPONSE_DATA = "";
 
 
-$menu = new Menu();
-
-if ($mode == "start") {
-      //shows initial user main menu
-      $response = $menu->Main_Menu($network_code, $input,  $msisdn, $session_id, $user_name, $traffic_id, $level);
-} else {
-      switch ($input) {
-            case 1:
-                  //shows initial user main menu
-                  $response = $menu->Cast_Votes($network_code, $input, $msisdn, $session_id, $user_name, $traffic_id, $level);
-                  break;
-            case 2:
-                  //shows initial user main menu
-                  $response = $menu->View_Votes($network_code, $input, $msisdn, $session_id, $user_name, $traffic_id, $level);
-                  break;
-            case 3:
-                  //shows initial user main menu
-                  $response = $menu->Contact_Us($network_code, $input, $msisdn, $session_id, $user_name, $traffic_id, $level);
-                  break;
-            default:
-                  //shows initial user main menu
-                  $response = "$network_code|END|$msisdn|$session_id|Inavalid Menu|$user_name |$traffic_id |$level ";
+if ($MODE != "start") {
+      if (isset($_SESSION['user_inputs'])) {
+            $_SESSION['user_inputs'][] = $DATA;
+      } else {
+            $_SESSION['user_inputs'] = array($DATA);
       }
+      $textArray = implode('*', $_SESSION['user_inputs']);
+} else {
+      unset($_SESSION['user_inputs']);
 }
 
-echo $response;
+if ($MODE == "start") {
+      //shows initial user main menu
+      $res = "Welcome To SmartCast^Reply with^";
+      $res .= "1. Cast Vote^";
+      $res .= "2. View Votes^";
+      $res .= "3. Contact Us";
+      $OTHER = "1";
+      $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER";
+} else {
+      $userInputs = explode("*", $textArray);
+      // print_r($userInputs);
+      if ($userInputs[0] == '1') {
+            //shows initial user main menu
+            if ($OTHER == '1') {
+                  $OTHER = "2";
+                  $res = "Enter Nominee's ShortCode $NETWORKID";
+                  $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
+            } else if ($OTHER == '2') {
+                  $OTHER = "3";
+                  $amount = "0.50";
+                  $res = "(GHS $amount / vote)^Enter Number of votes";
+                  $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
+            } else if ($OTHER == '3') {
+                  $amount  = 0.50;
+                  $shortCode = $userInputs[1];
+                  $numberOfVotes = $userInputs[2];
+                  $totalAmount  = ($amount * $numberOfVotes);
+                  $OTHER = "4";
+                  $res = "CheckOut :^";
+                  $res .= "Smart Media Awards^";
+                  $res .= "Best Singer Of The Year ^";
+                  $res .= "Name : Alidu Balkisu ^";
+                  $res .= "Code : $shortCode ^";
+                  $res .= "Votes : $numberOfVotes ^";
+                  $res .= "Amout : GHS " . number_format($totalAmount, 2) . "^";
+                  $res .= "1. Confirm ^";
+                  $res .= "2. Cancel";
+                  $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
+            } else if ($OTHER == '4') {
+                  if ($userInputs[3] == "1") {
+                        $res = "You will recieve A Payment Promt shortly ^thank you!";
+                        $RESPONSE_DATA = "$NETWORKID|END|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
+                        unset($_SESSION['user_inputs']);
+                  } else if ($userInputs[3] == "2") {
+                        $res = "vote has been cancel successfully^thank you";
+                        $RESPONSE_DATA = "$NETWORKID|END|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
+                        unset($_SESSION['user_inputs']);
+                  } else {
+                        $RESPONSE_DATA = "$NETWORKID|END|$MSISDN|$SESSION_ID|Inavalid Menu|$USERNAME |$TRAFFIC_ID|$OTHER ";
+                        unset($_SESSION['user_inputs']);
+                  }
+            } else {
+                  $RESPONSE_DATA = "$NETWORKID|END|$MSISDN|$SESSION_ID|Inavalid Menu|$USERNAME |$TRAFFIC_ID|$OTHER ";
+            }
+      } else if ($userInputs[0]  == '2') {
+            //shows initial user main menu
+            if ($OTHER == '1') {
+                  $OTHER = "2";
+                  $res = "Enter Nominee's ShortCode";
+                  $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
+            } else if ($OTHER == '2') {
+                  $fullName = "Alidu Balkisu";
+                  $shortCode = $userInputs[1];
+                  $totalVotes = 100;
+
+                  $res = "Summary:^";
+                  $res .= "Smart Media Awards^";
+                  $res .= "Best Singer Of The Year^";
+                  $res .= "Name : $fullName^";
+                  $res .= "Code : $shortCode^";
+                  $res .= "Votes: $totalVotes";
+                  $RESPONSE_DATA = "$NETWORKID|END|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
+            } else {
+                  $RESPONSE_DATA = "$NETWORKID|END|$MSISDN|$SESSION_ID|Inavalid Menu|$USERNAME |$TRAFFIC_ID|$OTHER";
+            }
+      } else if ($userInputs[0]  == '3') {
+            $res =  "SmartCast^";
+            $res .= "Contact: 0548711633 / 0552325210^";
+            $res .= "Email : smartcatee@gmail.com";
+            $RESPONSE_DATA = "$NETWORKID|END|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER";
+      } else {
+            $RESPONSE_DATA = "$NETWORKID|END|$MSISDN|$SESSION_ID|Inavalid Menu|$USERNAME |$TRAFFIC_ID|$OTHER";
+      }
+}
+echo $RESPONSE_DATA;
