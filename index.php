@@ -17,9 +17,19 @@ if ($MODE == "start") {
       $res .= "1. Cast Vote^";
       $res .= "2. View Votes^";
       $res .= "3. Contact Us";
-      $OTHER = "1*1";
+      $OTHER = "start";
       $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER";
 } else {
+       
+      if($OTHER == "start" && $DATA == "1"){
+          $OTHER = "1*1";
+      }else if ($OTHER == "start" && $DATA == "2"){
+          $OTHER = "2*1";
+      }else if ($OTHER == "start" && $DATA == "3"){
+          $OTHER = "3*1";
+      }
+           
+      
       $userInputs = explode("*", $OTHER);
       // print_r($userInputs);
       if ($userInputs[0] == '1') {
