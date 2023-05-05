@@ -20,7 +20,7 @@ if ($MODE == "start") {
       $OTHER = "1";
       $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER";
 } else {
-      $userInputs = explode("*", $textArray);
+      $userInputs = explode("*", $OTHER);
       // print_r($userInputs);
       if ($userInputs[0] == '1') {
             //shows initial user main menu
