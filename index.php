@@ -34,16 +34,16 @@ if ($MODE == "start") {
       // print_r($userInputs);
       if ($userInputs[0] == '1') {
             //shows initial user main menu
-            if ($OTHER == '1') {
+            if ($userInputs[1] == '1') {
                   $OTHER = "1*2";
                   $res = "Enter Nominee's ShortCode $NETWORKID";
                   $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
-            } else if ($OTHER == '2') {
+            } else if ($userInputs[1] == '2') {
                   $OTHER = "1*3";
                   $amount = "0.50";
                   $res = "(GHS $amount / vote)^Enter Number of votes";
                   $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
-            } else if ($OTHER == '3') {
+            } else if ($userInputs[1] == '3') {
                   $amount  = 0.50;
                   $shortCode = $userInputs[1];
                   $numberOfVotes = $userInputs[2];
@@ -59,7 +59,7 @@ if ($MODE == "start") {
                   $res .= "1. Confirm ^";
                   $res .= "2. Cancel";
                   $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
-            } else if ($OTHER == '4') {
+            } else if ($userInputs[1] == '4') {
                   if ($userInputs[3] == "1") {
                         $res = "You will recieve A Payment Promt shortly ^thank you!";
                         $RESPONSE_DATA = "$NETWORKID|END|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
@@ -77,11 +77,11 @@ if ($MODE == "start") {
             }
       } else if ($userInputs[0]  == '2') {
             //shows initial user main menu
-            if ($OTHER == '1') {
+            if ($userInputs[1] == '1') {
                   $OTHER = "2*2";
                   $res = "Enter Nominee's ShortCode";
                   $RESPONSE_DATA = "$NETWORKID|MORE|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
-            } else if ($OTHER == '2') {
+            } else if ($userInputs[1] == '2') {
                   $fullName = "Alidu Balkisu";
                   $shortCode = $userInputs[1];
                   $totalVotes = 100;
