@@ -1,6 +1,4 @@
 <?php
-// start the session
-session_start();
 
 $MSISDN = $_GET['msisdn'];
 $SESSION_ID = $_GET['sessionid'];
@@ -12,17 +10,6 @@ $TRAFFIC_ID = $_GET['trafficid'];
 $OTHER = $_GET['other'];
 $RESPONSE_DATA = "";
 
-
-if ($MODE != "start") {
-      if (isset($_SESSION['user_inputs'])) {
-            $_SESSION['user_inputs'][] = $DATA;
-      } else {
-            $_SESSION['user_inputs'] = array($DATA);
-      }
-      $textArray = implode('*', $_SESSION['user_inputs']);
-} else {
-      unset($_SESSION['user_inputs']);
-}
 
 if ($MODE == "start") {
       //shows initial user main menu
