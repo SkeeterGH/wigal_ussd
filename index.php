@@ -67,10 +67,8 @@ if ($MODE == "start") {
                   } else if ($userInputs[3] == "2") {
                         $res = "vote has been cancel successfully^thank you";
                         $RESPONSE_DATA = "$NETWORKID|END|$MSISDN|$SESSION_ID|$res|$USERNAME |$TRAFFIC_ID|$OTHER ";
-                        unset($_SESSION['user_inputs']);
                   } else {
                         $RESPONSE_DATA = "$NETWORKID|END|$MSISDN|$SESSION_ID|Inavalid Menu|$USERNAME |$TRAFFIC_ID|$OTHER ";
-                        unset($_SESSION['user_inputs']);
                   }
             } else {
                   $RESPONSE_DATA = "$NETWORKID|END|$MSISDN|$SESSION_ID|Inavalid Menu|$USERNAME |$TRAFFIC_ID|$OTHER ";
